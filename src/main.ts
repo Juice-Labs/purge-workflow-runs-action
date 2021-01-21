@@ -28,14 +28,18 @@ export async function main(): Promise<void> {
     const deletedRuns = []
     for await (const run of eachWorkflowRun(octokit)) {
       if (shouldDelete(run, actionInputs)) {
-        deletedRuns.push(run)
-        core.debug(`Deleting run:\n${JSON.stringify(run, null, 2)}`)
-        await octokit.actions.deleteWorkflowRun({
-          owner: github.context.repo.owner,
-          repo: github.context.repo.repo,
-          // eslint-disable-next-line @typescript-eslint/camelcase
-          run_id: run.id
-        })
+        try {
+          core.debug(`Deleting run:\n${JSON.stringify(run, null, 2)}`)
+          await octokit.actions.deleteWorkflowRun({
+            owner: github.context.repo.owner,
+            repo: github.context.repo.repo,
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            run_id: run.id
+          })
+          deletedRuns.push(run)
+        } catch(error) {
+          core.warning(error)
+        }
       }
     }
     core.setOutput('deleted-runs', JSON.stringify(deletedRuns))
