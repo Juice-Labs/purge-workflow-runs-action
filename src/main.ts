@@ -5,11 +5,12 @@ import {
   getOctokit,
   eachWorkflowRun,
   getActionInputs,
-  IActionInputs
+  IActionInputs,
+  components
 } from './utils'
 
 export function shouldDelete(
-  run: ActionsListWorkflowRunsForRepoResponseDataWorkflowRunsItem,
+  run: components['schemas']['workflow-run'],
   actionInputs: IActionInputs
 ): boolean {
   const expired =

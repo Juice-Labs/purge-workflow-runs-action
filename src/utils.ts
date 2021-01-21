@@ -3,7 +3,8 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import { restEndpointMethods } from '@octokit/plugin-rest-endpoint-methods'
 import { RestEndpointMethods } from '@octokit/plugin-rest-endpoint-methods/dist-types/generated/method-types'
-import { ActionsListWorkflowRunsForRepoResponseData } from '@octokit/types'
+export { components } from '@octokit/openapi-types/generated/types'
+import { components } from '@octokit/openapi-types/generated/types'
 import parseDuration from 'parse-duration'
 
 /*
@@ -24,7 +25,7 @@ export function getOctokit(): Octokit & RestEndpointMethods {
 
 export async function* eachWorkflowRun(
   octokit: Octokit & RestEndpointMethods
-): AsyncGenerator<ActionsListWorkflowRunsForRepoResponseDataWorkflowRunsItem> {
+): AsyncGenerator<components['schemas']['workflow-run']> {
   let hasNextPage = false
   let currentPage = 1
   const maxPerPage = 100
