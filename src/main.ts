@@ -29,7 +29,7 @@ export async function main(): Promise<void> {
       if (shouldDelete(run, actionInputs)) {
         deletedRuns.push(run)
         core.debug(`Deleting run:\n${JSON.stringify(run, null, 2)}`)
-        await octokit.actions.deleteWorkflowRunLogs({
+        await octokit.actions.deleteWorkflowRun({
           owner: github.context.repo.owner,
           repo: github.context.repo.repo,
           // eslint-disable-next-line @typescript-eslint/camelcase
